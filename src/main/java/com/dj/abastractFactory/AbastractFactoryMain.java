@@ -5,5 +5,7 @@ package com.dj.abastractFactory;
  * 赖对象的接口，无须指定他们具体的类。
  */
 public class AbastractFactoryMain {
+    public void main(String  [] args){
 
+    }
 }
