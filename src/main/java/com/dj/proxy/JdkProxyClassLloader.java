@@ -18,7 +18,7 @@ import java.io.IOException;
  */
 public class JdkProxyClassLloader extends ClassLoader{
     private File classPathFile;
-    public JdkProxyClassLloader(){
+     JdkProxyClassLloader(){
         String classPath = JdkProxyClassLloader.class.getResource("").getPath();
         this.classPathFile = new File(classPath);
     }

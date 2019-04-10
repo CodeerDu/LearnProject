@@ -19,7 +19,7 @@ import java.lang.reflect.Method;
  */
 public class JdkProxy {
     private static final String LINE_END = "\r\n";
-    public static Object newProxyInstance(JdkProxyClassLloader classLloader,Class<?>[] interfaces,JdkProxyHandle handle){
+    public static Object newProxyInstance(JdkProxyClassLloader jdkProxyClassLloader, Class<?>[] interfaces, JdkProxyHandle handle){
         try{
 //            1.动态生成源代码
              String src = gengerateSrc(interfaces);
@@ -27,6 +27,7 @@ public class JdkProxy {
             String path = JdkProxy.class.getResource("").getPath();
             System.out.println("Java Path "+ path);
             File file = new File(path+"$Proxy0.java");
+            System.out.println(path);
             if(file.exists()){
                 if(! file.delete()){
                     throw new RuntimeException("已存在代理文件，请手动删除");
@@ -45,9 +46,9 @@ public class JdkProxy {
             task.call();
             manager.close();
 //            4.class文件加载
-            Class proxyClass = classLloader.findClass("$Proxy0");
+            Class proxyClass = jdkProxyClassLloader.findClass("$Proxy0");
             Constructor constructor = proxyClass.getConstructor(JdkProxyHandle.class);
-            file.delete();
+//            file.delete();
 //            5.返回加载对象
             return constructor.newInstance(handle);
         }catch (Exception e){
@@ -59,9 +60,9 @@ public class JdkProxy {
     private static String gengerateSrc(Class<?>[] interfaces) {
         StringBuffer src = new StringBuffer();
         src.append("package com.dj.proxy;" + LINE_END);
-        src.append("import com.dj.proxy.Persion" + LINE_END);
+        src.append("import com.dj.proxy.JdkProxy;" + LINE_END);
         src.append("import java.lang.reflect.*;" + LINE_END);
-        src.append("public final class $Proxy0 extends JdkProxy implements " + interfaces[0].getName());
+        src.append("public final class $Proxy0 extends JdkProxy implements " + interfaces[0].getName()+LINE_END+"{");
         src.append("JdkProxyHandle handler;" + LINE_END);
         src.append("public $Proxy0(JdkProxyHandle handler)" + LINE_END +
                 "{" + LINE_END +
@@ -79,7 +80,7 @@ public class JdkProxy {
             src.append("e.printStackTrace();" + LINE_END);
             src.append("}");
         }
-        src.append("}" + LINE_END);
+        src.append("}" + LINE_END+"}");
         return src.toString();
     }
 }
