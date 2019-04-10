@@ -7,8 +7,12 @@ import java.io.File;
 import java.io.FileWriter;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
+/**
+ * 代理类生成
+ */
 
 /**
+ *
  * 1、拿到被代理对象的引用，并且获取到它的所有的接口，反射获取。
  * 2、JDK Proxy 类重新生成一个新的类、同时新的类要实现被代理类所有实现的所有的接
  * 口。

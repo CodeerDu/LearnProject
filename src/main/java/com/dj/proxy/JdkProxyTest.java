@@ -2,8 +2,11 @@ package com.dj.proxy;
 
 import java.lang.reflect.Method;
 
+/**
+ * 代理类。代理JdkProxyObj对象
+ */
 public class JdkProxyTest implements JdkProxyHandle {
-//    持有代理对象
+//    持有被代理对象
     private JdkProxyObj obj;
 
     public Object getInstnce(JdkProxyObj target){
@@ -12,7 +15,7 @@ public class JdkProxyTest implements JdkProxyHandle {
         return JdkProxy.newProxyInstance(new JdkProxyClassLloader(),clazz.getInterfaces(),this);
     }
 
-    @Override
+
     public Object invoke(Object proxy, Method method, Object[] args) throws Throwable {
         before();
         method.invoke(this.obj,args);
